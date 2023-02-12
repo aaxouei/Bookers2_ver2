@@ -1,6 +1,6 @@
 class Book < ApplicationRecord
    has_one_attached :image
-   belogs_to :user
+   belongs_to :user
    
    def get_image(width,height)
     unless image.attached?

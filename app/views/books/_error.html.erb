@@ -1,0 +1,8 @@
+<% if book.errors.any? %>
+<h3 class="text-danger mt-3 mx-auto"><%= book.errors.count %> errors occured</h3>
+<ul>
+  <% book.errors.full_messages.each do |message| %>
+    <li class="text-danger mx-auto"><%= message %></li>
+  <% end %>
+</ul>
+<% end %>

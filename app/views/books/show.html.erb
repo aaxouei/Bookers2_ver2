@@ -2,17 +2,17 @@
   <%= render 'error',book: @book %>
   <div class="row">
     <div class="col-md-3 mt-5">
-      
+
       <%= render 'users/info',user: @user %>
-      
+
       <div class="row">
         <%= link_to  edit_user_path(@user),class:"btn btn-outline-secondary btn-block" do %>
           <i class="fas fa-user-cog"></i>
         <% end %>
       </div>
-      
+
        <%= render 'newbook',book: @newbook %>
-       
+
     </div>
 
     <div class="col-md-8 offset-md-1 mt-5">
@@ -38,6 +38,33 @@
             </tr>
           </tbody>
         </table>
+        <h3 class="mt-5">Comments</h3>
+        <table class="table table-books table-hover table-inverse">
+          <% @book.book_comments.each do |book_comment| %>
+            <tr>
+              <td>
+                 <%= link_to user_path(book_comment.user_id) do %>
+                  <%= image_tag book_comment.user.get_profile_image(80,80) %>
+                  <br><%= book_comment.user.name %>
+                <% end %>
+              </td>
+              <td>
+                <%= book_comment.comment %>
+              </td>
+              <% if book_comment.user_id == current_user.id %>
+              <td><%= link_to "Destroy", book_book_comment_path(book_comment.book,book_comment), method: :delete, "data-confirm" => "コメントを本当に削除しますか？",class:"btn btn-danger btn-block" %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </table>
+        <div class="mt-3">
+          <%= form_with model:[@book,@book_comment] do |f| %>
+            <div class="field">
+            <%= f.text_area :comment,class:"form-control" %>
+            </div>
+             <%= f.submit '送信',class:"btn btn-secondary btn-block mt-3" %>
+          <% end %>
+        </div>
     </div>
   </div>
 </div>
